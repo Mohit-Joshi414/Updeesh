@@ -1,0 +1,9 @@
+.anchor{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.anchor:hover{
+    color: red;
+}
