@@ -49,8 +49,10 @@ export const getPostsByCategory = (categoryId, pageNumber, pageSize) => {
 export const getPostsTitleByCategory = () => {
   return myAxios(`/api/category/postsList`).then((response) => response.data);
 };
-export const getPostsByUserId = (userId) => {
-  return myAxios(`/api/user/${userId}/posts`).then((response) => response.data);
+export const getPostsByUserId = (userId, pageNumber, pageSize) => {
+  return myAxios(
+    `/api/user/${userId}/posts?pageNumber=${pageNumber}&pageSize=${pageSize}&sortDir=desc`
+  ).then((response) => response.data);
 };
 
 export const deletePostById = (postId) => {

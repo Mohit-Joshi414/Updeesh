@@ -10,21 +10,24 @@ import {
   Table,
 } from "reactstrap";
 import { loadAllCategories } from "../services/category-service";
-import Base from "./Base";
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
+import { ShimmerTable } from "react-shimmer-effects";
 
 const DisplayCategory = () => {
   const [modal, setModal] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggle = () => setModal(!modal);
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     loadAllCategories()
       .then((data) => {
+        setIsLoading(false);
         setCategories(data);
       })
       .catch((err) => {
+        setIsLoading(false);
         console.error(err);
       });
   }, []);
@@ -69,7 +72,13 @@ const DisplayCategory = () => {
                   <th>Delete</th>
                 </tr>
               </thead>
+
               <tbody>
+                {isLoading && (
+                  <>
+                    <ShimmerTable row={5} col={2} />
+                  </>
+                )}
                 {categories.map((c, i) => (
                   <tr key={i}>
                     <th scope="row">{i + 1}</th>

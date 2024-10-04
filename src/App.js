@@ -23,47 +23,52 @@ import CategoryWiseView from "./components/CategoryWiseView";
 import CategoryProvider from "./context/CategoryProvider";
 import ContactUs from "./components/ContactUs";
 import DisplayContactUsList from "./components/DisplayContactUsList";
+import CategoryListProvider from "./context/CategoryListProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
   return (
     <CategoryProvider>
-      <UserProvider>
-        <BrowserRouter>
-          <ToastContainer position="bottom-center" theme="dark" />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/post/:postId" element={<PostPage />} />
-            <Route path="/category/:categoryId" element={<CategoryWise />} />
-            <Route path="/addPost" element={<AddPost />} />
-            <Route path="/displayUserPosts" element={<DisplayUserPosts />} />
-            <Route path="/addCategory" element={<AddCategory />} />
-            <Route path="/displayCategory" element={<DisplayCategory />} />
-            <Route
-              path="/categoryWise/:categoryId"
-              element={<CategoryWiseView />}
-            />
-            <Route path="/admin">
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<Signup />} />
-            </Route>
-            <Route path="/user-admin" element={<PrivateRouters />}>
-              <Route path="dashboard" element={<UserDashboard />} />
-              <Route path="profile-info/:userId" element={<ProfileInfo />} />
-              <Route path="updatePost/:postId" element={<UpdatePost />} />
+      <CategoryListProvider>
+        <UserProvider>
+          <BrowserRouter>
+            <ToastContainer position="bottom-center" theme="dark" />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/post/:postId" element={<PostPage />} />
+              <Route path="/category/:categoryId" element={<CategoryWise />} />
+              <Route path="/addPost" element={<AddPost />} />
+              <Route path="/displayUserPosts" element={<DisplayUserPosts />} />
+              <Route path="/addCategory" element={<AddCategory />} />
+              <Route path="/displayCategory" element={<DisplayCategory />} />
               <Route
-                path="displayContactUs"
-                element={<DisplayContactUsList />}
+                path="/categoryWise/:categoryId"
+                element={<CategoryWiseView />}
               />
-              <Route
-                path="updateCategory/:categoryId"
-                element={<UpdateCategory />}
-              />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </UserProvider>
+              <Route path="/admin">
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<Signup />} />
+              </Route>
+              <Route path="/user-admin" element={<PrivateRouters />}>
+                <Route path="dashboard" element={<UserDashboard />} />
+                <Route path="profile-info/:userId" element={<ProfileInfo />} />
+                <Route path="updatePost/:postId" element={<UpdatePost />} />
+                <Route
+                  path="displayContactUs"
+                  element={<DisplayContactUsList />}
+                />
+                <Route
+                  path="updateCategory/:categoryId"
+                  element={<UpdateCategory />}
+                />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </UserProvider>
+      </CategoryListProvider>
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </CategoryProvider>
   );
 }

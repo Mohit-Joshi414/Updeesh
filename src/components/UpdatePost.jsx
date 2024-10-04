@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import Base from "./Base";
 import {
   Button,
   Card,
@@ -10,7 +9,6 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import { loadAllCategories } from "../services/category-service";
 import JoditEditor from "jodit-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCurrentUser } from "../auth/authentication";
@@ -18,10 +16,10 @@ import { loadPostById, uploadPostImage } from "../services/post-service";
 import { toast } from "react-toastify";
 import { updatePost } from "../services/post-service";
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
+import { categoryListContext } from "../context/categoryContext";
 
 const UpdatePost = () => {
   const { postId } = useParams();
-  const [categories, setCategories] = useState([]);
 
   const editor = useRef(null);
   const [user, setUser] = useState(getCurrentUser());
@@ -32,38 +30,28 @@ const UpdatePost = () => {
     title: "",
     content: "",
     categoryId: -1,
+    image_url: "",
   });
 
   const [image, setImage] = useState(null);
 
   const handleFileChange = (event) => {
-    console.log(event.target.files[0]);
     setImage(event.target.files[0]);
   };
   useEffect(() => {
     setUser(getCurrentUser());
-    console.log(user);
     loadPostById(postId)
       .then((data) => {
         setPost({ ...data });
-        console.log(post);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Error in loading bloag data");
-      });
-
-    loadAllCategories()
-      .then((data) => {
-        console.log(data);
-        setCategories(data);
       })
       .catch((err) => {
         console.error(err);
+        toast.error("Error in loading bloag data");
       });
   }, []);
 
   const fieldChange = (event) => {
+    console.log(event.target.name);
     console.log(event.target.value);
     setPost({ ...post, [event.target.name]: event.target.value });
   };
@@ -74,7 +62,6 @@ const UpdatePost = () => {
 
   const updatingPost = (event) => {
     event.preventDefault();
-    console.log(post);
 
     if (post.title.trim() === "") {
       alert("post title is required");
@@ -91,10 +78,9 @@ const UpdatePost = () => {
 
     //submit form
     post["userId"] = user.id;
+    console.log(post);
     updatePost(post)
       .then((data) => {
-        console.log(data);
-
         if (image) {
           uploadPostImage(image, data.id)
             .then((data) => {
@@ -102,7 +88,7 @@ const UpdatePost = () => {
             })
             .catch((err) => {
               toast.error("error in uploading image");
-              console.log(err);
+              console.error(err);
             });
         }
 
@@ -110,6 +96,9 @@ const UpdatePost = () => {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        navigate("/user-admin/dashboard");
       });
   };
   return (
@@ -156,28 +145,47 @@ const UpdatePost = () => {
                     onChange={handleFileChange}
                   ></Input>
                 </FormGroup>
-                <Label for="category">Category</Label>
-                <FormGroup>
+                <FormGroup floating>
                   <Input
-                    id="category"
-                    name="categoryId"
-                    type="select"
+                    id="image_url"
+                    name="image_url"
+                    placeholder="Enter title here..."
+                    type="text"
                     onChange={(e) => fieldChange(e)}
-                    value={post.categoryId}
-                  >
-                    <option disabled value={-1}>
-                      Select
-                    </option>
-                    {categories.map((category) => (
-                      <option value={category.id} key={category.id}>
-                        {category.title}
-                      </option>
-                    ))}
-                  </Input>
+                    value={post.image_url}
+                  />
+                  <Label for="image_url">Paste link of banner image</Label>
                 </FormGroup>
+                <Label for="category">Category</Label>
+                <categoryListContext.Consumer>
+                  {(categories) => {
+                    return (
+                      <>
+                        <FormGroup>
+                          <Input
+                            id="category"
+                            name="categoryId"
+                            type="select"
+                            onChange={(e) => fieldChange(e)}
+                            value={post.categoryId}
+                          >
+                            <option disabled value={-1}>
+                              Select
+                            </option>
+                            {categories?.map((category) => (
+                              <option value={category.id} key={category.id}>
+                                {category.title}
+                              </option>
+                            ))}
+                          </Input>
+                        </FormGroup>
+                      </>
+                    );
+                  }}
+                </categoryListContext.Consumer>
                 <Container className="text-center">
                   <Button type="submit" color="dark">
-                    Create Post
+                    Update Post
                   </Button>
                   <Button className="ms-3">Reset</Button>
                 </Container>

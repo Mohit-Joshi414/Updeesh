@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  Button,
-  Card,
-  CardBody,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  Table,
-} from "reactstrap";
-import { loadAllCategories } from "../services/category-service";
-import Base from "./Base";
+import { Card, CardBody, Table } from "reactstrap";
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
 import { loadAllContactUs } from "../services/contactus-service";
 import InfiniteScroll from "react-infinite-scroll-component";

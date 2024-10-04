@@ -9,22 +9,18 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import { loadAllCategories } from "../services/category-service";
 import JoditEditor from "jodit-react";
 import {
   createPost as doCreatePost,
-  getPostsByUserId,
   uploadPostImage,
 } from "../services/post-service";
 import { getCurrentUser } from "../auth/authentication";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Base from "./Base";
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
+import { categoryListContext } from "../context/categoryContext";
 
 const AddPost = () => {
-  const [categories, setCategories] = useState([]);
-
   const editor = useRef(null);
   const [user, setUser] = useState(undefined);
 
@@ -33,6 +29,7 @@ const AddPost = () => {
     title: "",
     content: "",
     categoryId: -1,
+    image_url: "",
   });
 
   const [image, setImage] = useState(null);
@@ -44,19 +41,17 @@ const AddPost = () => {
 
   useEffect(() => {
     setUser(getCurrentUser());
-
-    loadAllCategories()
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
   }, []);
 
   const fieldChange = (event) => {
     setPost({ ...post, [event.target.name]: event.target.value });
   };
+  // const getImage = (rawURL) => {
+  //   const RAW_URL1 = rawURL.split("/d/");
+  //   const RAW_URL2 = RAW_URL1[1].split("/view");
+  //   const IMAGE_ID = RAW_URL2[0];
+  //   return `https://drive.google.com/thumbnail?id=${IMAGE_ID}`;
+  // };
 
   const contentFieldChange = (data) => {
     setPost({ ...post, content: data });
@@ -80,16 +75,20 @@ const AddPost = () => {
 
     //submit form
     post["userId"] = user.id;
+    console.log(post);
+
     doCreatePost(post)
       .then((data) => {
-        uploadPostImage(image, data.id)
-          .then((data) => {
-            toast.success("image uploaded");
-          })
-          .catch((err) => {
-            toast.error("error in uploading image");
-            console.log(err);
-          });
+        if (image) {
+          uploadPostImage(image, data.id)
+            .then((data) => {
+              toast.success("image uploaded");
+            })
+            .catch((err) => {
+              toast.error("error in uploading image");
+              console.log(err);
+            });
+        }
 
         toast.success("post created");
         navigate("/user-admin/dashboard");
@@ -102,7 +101,7 @@ const AddPost = () => {
   const resetFeild = (e) => {
     alert("want to reset");
     e.preventDefault();
-    setPost({ title: "", content: "", categoryId: -1 });
+    setPost({ title: "", content: "", categoryId: -1, image_url: "" });
   };
 
   return (
@@ -140,25 +139,46 @@ const AddPost = () => {
                   onChange={handleFileChange}
                 ></Input>
               </FormGroup>
-              <Label for="category">Category</Label>
-              <FormGroup>
+              <FormGroup floating>
                 <Input
-                  id="category"
-                  name="categoryId"
-                  type="select"
+                  id="image_url"
+                  name="image_url"
+                  placeholder="Enter title here..."
+                  type="text"
                   onChange={(e) => fieldChange(e)}
-                  value={post.categoryId}
-                >
-                  <option disabled value={-1}>
-                    Select
-                  </option>
-                  {categories.map((category) => (
-                    <option value={category.id} key={category.id}>
-                      {category.title}
-                    </option>
-                  ))}
-                </Input>
+                  value={post.image_url}
+                />
+                <Label for="image_url">Paste link of banner image</Label>
               </FormGroup>
+
+              <Label for="category">Category</Label>
+              <categoryListContext.Consumer>
+                {(categories) => {
+                  return (
+                    <>
+                      <FormGroup>
+                        <Input
+                          id="category"
+                          name="categoryId"
+                          type="select"
+                          onChange={(e) => fieldChange(e)}
+                          value={post.categoryId}
+                        >
+                          <option disabled value={-1}>
+                            Select
+                          </option>
+                          {categories?.map((category) => (
+                            <option value={category.id} key={category.id}>
+                              {category.title}
+                            </option>
+                          ))}
+                        </Input>
+                      </FormGroup>
+                    </>
+                  );
+                }}
+              </categoryListContext.Consumer>
+
               <Container className="text-center">
                 <Button type="submit" color="dark">
                   Create Post

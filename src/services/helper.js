@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getCurrentUserToken } from "../auth/authentication";
 
-export const BASE_URL = "https://demo-deployment-latest-ku5g.onrender.com";
+export const BASE_URL = "https://demo-deployment-0-1-updesh.onrender.com";
+// export const BASE_URL = "http://localhost:9090";
 
 export const myAxios = axios.create({
   baseURL: BASE_URL,

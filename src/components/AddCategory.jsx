@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -8,22 +8,10 @@ import {
   FormGroup,
   Input,
   Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-  Table,
 } from "reactstrap";
-import {
-  createCategory,
-  deleteCategoryById,
-  getCategoryById,
-  loadAllCategories,
-} from "../services/category-service";
+import { createCategory } from "../services/category-service";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import DisplayCategory from "./DisplayCategory";
-import Base from "./Base";
+import { useNavigate } from "react-router-dom";
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
 const AddCategory = () => {
   const [category, setCategory] = useState({

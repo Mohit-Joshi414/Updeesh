@@ -1,14 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Base from "../Base";
-import AddPost from "../AddPost";
-import { Button, Card, CardBody, Col, Container, Row } from "reactstrap";
-import { getCurrentUser } from "../../auth/authentication";
-import { deletePostById, getPostsByUserId } from "../../services/post-service";
-import CategorySideMenu from "../CategorySideMenu";
-import Post from "../Post";
-import { toast } from "react-toastify";
-import AddCategory from "../AddCategory";
-import DisplayUserPosts from "../DisplayUserPosts";
+import React from "react";
+import { Button, Card, CardBody, Container } from "reactstrap";
 import { Link } from "react-router-dom";
 import BaseWithoutCategoryList from "../BaseWithoutCategoryList";
 

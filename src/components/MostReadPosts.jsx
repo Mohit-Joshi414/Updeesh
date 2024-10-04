@@ -1,20 +1,21 @@
 import React from "react";
-import { Card, CardBody, Col, Row } from "reactstrap";
+import { Row } from "reactstrap";
 import { BASE_URL } from "../services/helper";
+import { Link } from "react-router-dom";
 
 const MostReadPosts = ({
   post = { title: "This is title", content: "this is content" },
 }) => {
   return (
     <Row>
-      <a
+      <Link
         style={{
           float: "left",
           margin: "5px",
           textDecoration: "none",
           color: "black",
         }}
-        href="#"
+        to="#"
       >
         <div style={{ float: "left", marginRight: "10px" }}>
           <img
@@ -27,7 +28,7 @@ const MostReadPosts = ({
         <div>
           <b>{post.title}</b>
         </div>
-      </a>
+      </Link>
     </Row>
   );
 };

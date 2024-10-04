@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { loadPostById } from "../services/post-service";
 import { toast } from "react-toastify";
 import {
-  Button,
   Card,
   CardBody,
   CardImg,
@@ -22,7 +21,6 @@ import {
   EmailShareButton,
   FacebookIcon,
   FacebookShareButton,
-  LineIcon,
   LinkedinIcon,
   LinkedinShareButton,
   PinterestIcon,
@@ -34,24 +32,30 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
+import usePostById from "../hooks/usePostById";
+import { ShimmerPostDetails, ShimmerPostItem } from "react-shimmer-effects";
 
 const PostPage = () => {
   const { postId } = useParams();
-  const shareUrl =
-    "https://shravanmeena.medium.com/how-to-use-react-share-npm-in-reactjs-e5f356c13a30";
-  const [post, setPost] = useState(null);
-  useEffect(() => {
-    loadPostById(postId)
-      .then((data) => {
-        console.log(data);
-        setPost(data);
-        window.scroll(0, 0);
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error("Error in loading post");
-      });
-  }, [postId]);
+
+  // const [post, setPost] = useState(null);
+  // useEffect(() => {
+  //   loadPostById(postId)
+  //     .then((data) => {
+  //       setPost(data);
+  //       window.scroll(0, 0);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       toast.error("Error in loading post");
+  //     });
+  // }, [postId]);
+  const {
+    data: post,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+  } = usePostById(postId);
 
   const printDate = (number) => {
     return new Date(number).toLocaleDateString();
@@ -66,6 +70,11 @@ const PostPage = () => {
               size: 12,
             }}
           >
+            {isLoading && (
+              <>
+                <ShimmerPostDetails card cta variant="EDITOR" />
+              </>
+            )}
             {post && (
               <Card className="my-2 container">
                 <CardTitle tag="h5" className="mt-4">
@@ -75,7 +84,11 @@ const PostPage = () => {
                 <CardImg
                   className="img-fluid mt-3 container text-center"
                   alt="Card image cap"
-                  src={BASE_URL + "/api/post/image/" + post.image_url}
+                  src={
+                    post.image_url.toLowerCase().startsWith("http")
+                      ? post.image_url
+                      : `${BASE_URL}/api/post/image/${post.image_url}`
+                  }
                   style={{
                     maxWidth: "500px",
                     height: "250px",
@@ -187,7 +200,7 @@ const PostPage = () => {
         </Row>
 
         {/* //Showing comment section only for login user by default it is set to disabled */}
-        {isLoggedIn() && <Comment post={post} setPost={setPost} />}
+        {/* {isLoggedIn() && <Comment post={post} setPost={setPost} />} */}
       </Container>
     </Base>
   );

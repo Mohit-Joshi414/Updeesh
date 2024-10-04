@@ -15,38 +15,21 @@ import {
 } from "reactstrap";
 import { doLogout, getCurrentUser, isLoggedIn } from "../auth/authentication";
 import { toast } from "react-toastify";
-import { loadAllCategories } from "../services/category-service";
+
 import CategoryWiseView from "./CategoryWiseView";
+import { categoryListContext } from "../context/categoryContext";
+
 const CustomNavibar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(undefined);
-  const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
     setLogin(isLoggedIn());
     setUser(getCurrentUser());
   }, [login]);
-  useEffect(() => {
-    loadAllCategories()
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-  useEffect(() => {
-    loadAllCategories()
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
   const logout = () => {
     doLogout(() => {
@@ -94,19 +77,28 @@ const CustomNavibar = () => {
               <DropdownToggle nav caret>
                 More
               </DropdownToggle>
+
               <DropdownMenu end>
-                {categories?.map((category, index) => (
-                  <DropdownItem
-                    tag={Link}
-                    to={`/categoryWise/${category.id}`}
-                    onChange={(e) => {
-                      return <CategoryWiseView />;
-                    }}
-                    key={index}
-                  >
-                    {category.title}
-                  </DropdownItem>
-                ))}
+                <categoryListContext.Consumer>
+                  {(categories) => {
+                    return (
+                      <>
+                        {categories?.map((category, index) => (
+                          <DropdownItem
+                            tag={Link}
+                            to={`/categoryWise/${category.id}`}
+                            onChange={(e) => {
+                              return <CategoryWiseView />;
+                            }}
+                            key={index}
+                          >
+                            {category.title}
+                          </DropdownItem>
+                        ))}
+                      </>
+                    );
+                  }}
+                </categoryListContext.Consumer>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

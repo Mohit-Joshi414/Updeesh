@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+for google drive image:
+imageId = 1K7x5hQy-wCHRsrYHywTKv3hjRRgQuKKc
+
+https://drive.google.com/thumbnail?id={{imageId}}&sz=w1000
+replace imageId with you image id and put all images in public folder
+
+and put in new tab it generate new link use this link
+https://lh3.googleusercontent.com/d/1K7x5hQy-wCHRsrYHywTKv3hjRRgQuKKc=w1000?authuser=0

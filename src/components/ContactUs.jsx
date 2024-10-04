@@ -1,6 +1,5 @@
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
-import { useEffect, useState } from "react";
-import Base from "./Base";
+import { useState } from "react";
 import {
   Form,
   FormGroup,
@@ -11,7 +10,6 @@ import {
   Card,
   Container,
 } from "reactstrap";
-import { signup } from "../services/user-service";
 import { toast } from "react-toastify";
 import { createContactUs } from "../services/contactus-service";
 

@@ -1,9 +1,7 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
 import styles from "./SideListCard.module.css";
-import { categoryContext } from "../context/categoryContext";
 
-import Base from "./Base";
 import { Link } from "react-router-dom";
 
 const SideListCard = ({ post }) => {

@@ -19,7 +19,7 @@ const Base = ({ title = "Welcome to our website", children }) => {
                   <>
                     {postContent?.map((post, index) => {
                       return (
-                        post?.posts != 0 && (
+                        post?.posts?.length !== 0 && (
                           <SideListCard key={index} post={post} />
                         )
                       );

@@ -1,143 +1,87 @@
-import React, { useEffect, useState } from "react";
-import { loadAllPost } from "../services/post-service";
-import {
-  Row,
-  Col,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-} from "reactstrap";
+import React, { Fragment } from "react";
+import { Row, Col } from "reactstrap";
 import Post from "./Post";
-import { toast } from "react-toastify";
-import MostReadPosts from "./MostReadPosts";
-import SideListCard from "./SideListCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import usePosts from "../hooks/usePosts";
+import { ShimmerContentBlock } from "react-shimmer-effects";
 
 const NewFeed = () => {
-  const [postContent, setPostContent] = useState({
-    content: [],
-    totalPages: "",
-    totalElement: "",
-    pageNumber: "",
-    pageSize: "",
-    elementPresent: "",
-    lastPage: false,
-  });
+  //Custom hook inside this we used useInfiniteQuery for fetching data
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetching } =
+    usePosts(3);
 
-  const [currentPage, setCurrentPage] = useState(0);
-
-  useEffect(() => {
-    changePage(currentPage);
-  }, [currentPage]);
-
-  const changePage = (pageNumber = 0, pageSize = 6) => {
-    if (pageNumber > postContent.pageNumber && postContent.lastPage) {
-      return;
-    }
-    if (pageNumber < postContent.pageNumber && postContent.pageNumber === 0) {
-      return;
-    }
-
-    loadAllPost(pageNumber, pageSize)
-      .then((data) => {
-        console.log(data);
-        setPostContent({
-          content: [...postContent.content, ...data.content],
-          totalPages: data.totalPages,
-          totalElement: data.totalElement,
-          pageNumber: data.pageNumber,
-          pageSize: data.pageSize,
-          elementPresent: data.elementPresent,
-          lastPage: data.lastPage,
-        });
-        // window.scroll(0, 0);
-      })
-      .catch((err) => {
-        toast.error("Error in loading posts");
-      });
-  };
-
-  const changePageInfinite = () => {
-    console.log("page changed");
-    setCurrentPage(currentPage + 1);
-  };
-
+  if (isLoading) {
+    return (
+      <>
+        <ShimmerContentBlock
+          title
+          text
+          cta
+          thumbnailWidth={370}
+          thumbnailHeight={370}
+        />
+        <ShimmerContentBlock
+          title
+          text
+          cta
+          thumbnailWidth={370}
+          thumbnailHeight={370}
+        />
+        <ShimmerContentBlock
+          title
+          text
+          cta
+          thumbnailWidth={370}
+          thumbnailHeight={370}
+        />
+        <ShimmerContentBlock
+          title
+          text
+          cta
+          thumbnailWidth={370}
+          thumbnailHeight={370}
+        />
+      </>
+    );
+  }
   return (
     <div className="container-fluid" color="#012230">
       <Row xs={1} sm={1} md={1} lg={1} xl={1}>
         <InfiniteScroll
-          dataLength={postContent?.content?.length}
-          next={changePageInfinite}
-          hasMore={!postContent.lastPage}
-          loader={<h4>Loading...</h4>}
+          dataLength={
+            data?.pages?.reduce((acc, page) => acc + page.content.length, 0) ||
+            0
+          } // Total items loaded
+          next={fetchNextPage} // Trigger fetch for the next page
+          hasMore={!!hasNextPage}
+          loader={
+            <h4 style={{ textAlign: "center", margin: "5px 0 10px 0" }}>
+              Loading more posts...
+            </h4>
+          }
           endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
+            !isFetching && (
+              <h5 style={{ textAlign: "center", margin: "5px 0 10px 0" }}>
+                <b>Yay! You have seen it all</b>
+              </h5>
+            )
           }
           style={{ overflowX: "hidden" }}
         >
-          {postContent?.content?.map((postData) => (
-            <Col key={postData.id}>
-              <Post post={postData} />
-            </Col>
-          ))}
+          {data?.pages?.map((group, i) => {
+            return (
+              <Fragment key={i}>
+                {group?.content?.map((postData) => (
+                  <Col key={postData.id}>
+                    {console.log(postData)}
+                    <Post post={postData} />
+                  </Col>
+                ))}
+              </Fragment>
+            );
+          })}
         </InfiniteScroll>
       </Row>
-      <hr />
-      {/* <h3 className="mt-4">Most Read</h3>
-      <Row xs={1} sm={1} md={2} lg={2} xl={3}>
-        {postContent?.content?.map((postData) => (
-          <Col key={postData.id} className="my-2">
-            <MostReadPosts key={postData.id} post={postData} />
-          </Col>
-        ))}
-      </Row>
-      <hr /> */}
-      {/* <SideListCard /> */}
-      {/* <hr /> */}
-      {/* <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "20px",
-        }}
-      >
-        <Pagination
-          aria-label="Page navigation example"
-          size="md"
-          className="text-center mt-6"
-        >
-          <PaginationItem
-            disabled={postContent.pageNumber === 0}
-            onClick={() => changePage(postContent.pageNumber - 1)}
-          >
-            <PaginationLink href="#" previous>
-              Previous
-            </PaginationLink>
-          </PaginationItem>
-          {[...Array(postContent.totalPages)].map((item, index) => (
-            <PaginationItem
-              key={index}
-              active={postContent.pageNumber === index}
-              onClick={() => {
-                changePage(index, 6);
-              }}
-            >
-              <PaginationLink href="#">{index + 1}</PaginationLink>
-            </PaginationItem>
-          ))}
-
-          <PaginationItem
-            disabled={postContent.lastPage}
-            onClick={() => changePage(postContent.pageNumber + 1)}
-          >
-            <PaginationLink href="#" next>
-              Next
-            </PaginationLink>
-          </PaginationItem>
-        </Pagination>
-      </div> */}
     </div>
   );
 };

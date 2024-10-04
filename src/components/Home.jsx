@@ -1,9 +1,5 @@
-import { Col, Container, Row } from "reactstrap";
 import Base from "./Base";
 import NewFeed from "./NewFeed";
-import CategorySideMenu from "./CategorySideMenu";
-import st from "./SideListCard.module.css";
-import SideListCard from "./SideListCard";
 const Home = () => {
   return (
     <Base>

@@ -12,8 +12,6 @@ import {
 } from "reactstrap";
 import { BASE_URL } from "../services/helper";
 import { getCurrentUser, isLoggedIn } from "../auth/authentication";
-import { deletePostById } from "../services/post-service";
-import { toast } from "react-toastify";
 
 const Post = ({
   post = { title: "This is title", content: "this is content" },
@@ -34,7 +32,11 @@ const Post = ({
         <Col lg="6" sm="12">
           <CardImg
             alt="Card image cap"
-            src={BASE_URL + "/api/post/image/" + post.image_url}
+            src={
+              post.image_url.toLowerCase().startsWith("http")
+                ? post.image_url
+                : `${BASE_URL}/api/post/image/${post.image_url}`
+            }
             style={{
               margin: "5px",
               maxWidth: "97%",
@@ -47,7 +49,6 @@ const Post = ({
         <Col lg="6" sm="12">
           <CardBody>
             <CardTitle tag="h5">{post.title}</CardTitle>
-            {console.log(post.content)}
             <CardText
               dangerouslySetInnerHTML={{
                 __html: post?.content.substring(0, 100) + "...",
@@ -59,17 +60,17 @@ const Post = ({
               </small>
             </CardText>
             <div className="container text-center">
-              <Link className="btn btn-dark" to={"/post/" + post.id}>
+              <Link className="btn btn-dark mt-2" to={"/post/" + post.id}>
                 Read more
               </Link>
 
               {loggedIn &&
                 user &&
-                user.id == post.user.id &&
+                user.id === post.user.id &&
                 parent === "dashboard" && (
                   <Button
                     color="danger"
-                    className="ms-3"
+                    className="ms-2 mt-2"
                     onClick={() => deletePost(post.id)}
                   >
                     Delete
@@ -77,11 +78,11 @@ const Post = ({
                 )}
               {loggedIn &&
                 user &&
-                user.id == post.user.id &&
+                user.id === post.user.id &&
                 parent === "dashboard" && (
                   <Button
                     color="warning"
-                    className="ms-3"
+                    className="ms-2 mt-2"
                     tag={Link}
                     to={`/user-admin/updatePost/${post.id}`}
                   >

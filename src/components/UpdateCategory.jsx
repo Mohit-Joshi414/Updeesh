@@ -25,8 +25,8 @@ const UpdateCategory = () => {
     getCategoryById(categoryId)
       .then((data) => {
         setCategory({
-          ["title"]: data.title,
-          ["description"]: data.description,
+          title: data.title,
+          description: data.description,
         });
       })
       .catch((err) => {

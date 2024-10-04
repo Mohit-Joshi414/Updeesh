@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import Base from "../Base";
-import userContext from "../../context/userContext";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById } from "../../services/user-service";
 import { Card, CardBody, Col, Container, Row, Table } from "reactstrap";
@@ -35,7 +33,7 @@ const ProfileInfo = () => {
             <Col md={{ size: "6", offset: 3 }} sm={{ size: "10", offset: 2 }}>
               <Card>
                 {currentUser && userId ? (
-                  currentUser.id == userId ? (
+                  currentUser.id === userId ? (
                     <CardBody>
                       <h3 className="text-center">User Profile Information</h3>
                       <Table>

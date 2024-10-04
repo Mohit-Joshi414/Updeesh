@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Base from "./Base";
 import {
   Form,
   FormGroup,
@@ -18,10 +17,6 @@ const Login = () => {
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
-  });
-  const [error, setError] = useState({
-    errors: "",
-    isError: false,
   });
 
   useEffect(() => {
