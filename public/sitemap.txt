@@ -1,0 +1,5 @@
+https://updeesh-git.netlify.app/
+https://updeesh-git.netlify.app/about
+https://updeesh-git.netlify.app/contact
+https://updeesh-git.netlify.app/categoryWise
+https://updeesh-git.netlify.app/post
