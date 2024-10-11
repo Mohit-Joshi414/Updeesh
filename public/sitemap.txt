@@ -1,5 +1,7 @@
 https://updeesh-git.netlify.app/
 https://updeesh-git.netlify.app/about
 https://updeesh-git.netlify.app/contact
-https://updeesh-git.netlify.app/category
-https://updeesh-git.netlify.app/post
+https://updeesh-git.netlify.app/post/The-Sacred-Sands-of-Puri:-Unraveling-The-Mysteries-Of-Jagannath-Temple-&-Beyond-3
+https://updeesh-git.netlify.app/post/Mahakaleshwar-Jyotirlinga-1
+https://updeesh-git.netlify.app/category/Mandir-1
+https://updeesh-git.netlify.app/category/Kahani-2
