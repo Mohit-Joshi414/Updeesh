@@ -45,14 +45,11 @@ const UpdatePost = () => {
         setPost({ ...data });
       })
       .catch((err) => {
-        console.error(err);
-        toast.error("Error in loading bloag data");
+        toast.error("Error in loading blog data");
       });
   }, []);
 
   const fieldChange = (event) => {
-    console.log(event.target.name);
-    console.log(event.target.value);
     setPost({ ...post, [event.target.name]: event.target.value });
   };
 
@@ -78,7 +75,7 @@ const UpdatePost = () => {
 
     //submit form
     post["userId"] = user.id;
-    console.log(post);
+
     updatePost(post)
       .then((data) => {
         if (image) {
@@ -88,14 +85,13 @@ const UpdatePost = () => {
             })
             .catch((err) => {
               toast.error("error in uploading image");
-              console.error(err);
             });
         }
 
         toast.success("post updated");
       })
       .catch((err) => {
-        console.error(err);
+        toast.error("Something wrong");
       })
       .finally(() => {
         navigate("/user-admin/dashboard");
@@ -128,14 +124,6 @@ const UpdatePost = () => {
                     value={post.content}
                     onChange={contentFieldChange}
                   />
-
-                  {/* <Input
-                id="content"
-                name="content"
-                placeholder="Enter your content..."
-                type="textarea"
-                style={{ height: "250px" }}
-              /> */}
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">Select banner image</Label>

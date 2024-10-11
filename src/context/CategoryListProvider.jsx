@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { loadAllCategories } from "../services/category-service";
 import { categoryListContext } from "./categoryContext";
+import { toast } from "react-toastify";
 
 export default function CategoryListProvider({ children }) {
   const [categories, setCategories] = useState();
@@ -9,10 +10,9 @@ export default function CategoryListProvider({ children }) {
     loadAllCategories()
       .then((data) => {
         setCategories(data);
-        console.log(data);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error("Something wrong");
       });
   }, []);
   return (

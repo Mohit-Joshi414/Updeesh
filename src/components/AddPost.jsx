@@ -46,13 +46,6 @@ const AddPost = () => {
   const fieldChange = (event) => {
     setPost({ ...post, [event.target.name]: event.target.value });
   };
-  // const getImage = (rawURL) => {
-  //   const RAW_URL1 = rawURL.split("/d/");
-  //   const RAW_URL2 = RAW_URL1[1].split("/view");
-  //   const IMAGE_ID = RAW_URL2[0];
-  //   return `https://drive.google.com/thumbnail?id=${IMAGE_ID}`;
-  // };
-
   const contentFieldChange = (data) => {
     setPost({ ...post, content: data });
   };
@@ -75,7 +68,6 @@ const AddPost = () => {
 
     //submit form
     post["userId"] = user.id;
-    console.log(post);
 
     doCreatePost(post)
       .then((data) => {
@@ -86,7 +78,6 @@ const AddPost = () => {
             })
             .catch((err) => {
               toast.error("error in uploading image");
-              console.log(err);
             });
         }
 
@@ -94,7 +85,7 @@ const AddPost = () => {
         navigate("/user-admin/dashboard");
       })
       .catch((err) => {
-        console.error(err);
+        toast.error("Something wrong");
       });
   };
 

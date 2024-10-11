@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { loadAllPost } from "../services/post-service";
 
 const usePosts = (pageSize) => {
@@ -6,10 +6,6 @@ const usePosts = (pageSize) => {
     const response = await loadAllPost(pageParam, limit);
     return response;
   };
-  // const { data, isError, isLoading, error } = useQuery({
-  //   queryKey: ["postContent", pageNumber],
-  //   queryFn: fetchPosts,
-  // });
 
   const {
     data,

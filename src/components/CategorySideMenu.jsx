@@ -8,11 +8,10 @@ const CategorySideMenu = () => {
   useEffect(() => {
     loadAllCategories()
       .then((data) => {
-        console.log(data);
         setCategories([...data]);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Something wrong");
       });
   }, []);
   return (

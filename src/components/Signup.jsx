@@ -25,12 +25,7 @@ const Signup = () => {
     isError: false,
   });
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
-
   const handleChange = (event, property) => {
-    // console.log(event.target.value);
     setData({ ...data, [property]: event.target.value });
   };
 
@@ -45,35 +40,17 @@ const Signup = () => {
 
   const submitForm = (event) => {
     event.preventDefault();
-    // console.log(data.password);
-    // if (data.password.length < 4 || data.password.length >= 16) {
-    //   console.log(data.password);
-    //   setError({
-    //     errors: "Password must be min 4 char & max 16 char",
-    //     isError: true,
-    //   });
-    //   toast.error("Password must be min 4 char & max 16 char");
-    // }
 
-    // if (error.isError) {
-    //   toast.error("Form data is invalid! Please recheck and submit again!");
-    //   setError({ ...error, isError: false });
-    //   return;
-    // }
     signup(data)
       .then((res) => {
-        console.log(res);
-        console.log("Success");
         toast.success("User registered successfully!!");
       })
       .catch((err) => {
-        console.log(err);
-        console.error("error");
         setError({
           errors: err,
           isError: true,
         });
-        // toast.error("Something wrong please try again!!");
+        toast.error("Something wrong please try again!!");
       });
   };
 
@@ -142,25 +119,7 @@ const Signup = () => {
               <FormFeedback>{error.errors?.response?.data?.about}</FormFeedback>
               <Label for="about">Tell me something about yourself</Label>
             </FormGroup>
-            {/* <FormGroup>
-            <Label for="exampleSelect">Select</Label>
-            <Input id="exampleSelect" name="select" type="select">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Input>
-          </FormGroup>
 
-          <FormGroup>
-            <Label for="exampleFile">File</Label>
-            <Input id="exampleFile" name="file" type="file" />
-            <FormText>
-              This is some placeholder block-level help text for the above
-              input. It‘s a bit lighter and easily wraps to a new line.
-            </FormText>
-          </FormGroup> */}
             <Container className="text-center">
               <Button color="dark">Signup</Button>
               <Button

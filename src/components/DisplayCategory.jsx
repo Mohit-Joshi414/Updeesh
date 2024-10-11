@@ -12,6 +12,7 @@ import {
 import { loadAllCategories } from "../services/category-service";
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
 import { ShimmerTable } from "react-shimmer-effects";
+import { toast } from "react-toastify";
 
 const DisplayCategory = () => {
   const [modal, setModal] = useState(false);
@@ -28,7 +29,7 @@ const DisplayCategory = () => {
       })
       .catch((err) => {
         setIsLoading(false);
-        console.error(err);
+        toast.error("Something wrong");
       });
   }, []);
   useEffect(() => {
@@ -41,7 +42,6 @@ const DisplayCategory = () => {
   const handleDelete = (e, id) => {
     e.preventDefault();
     toggle();
-    console.log(isDelete);
     // deleteCategoryById(id)
     //   .then((data) => {
     //     toast.success("deleted successfully");

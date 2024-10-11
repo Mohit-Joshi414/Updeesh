@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Base from "./Base";
 import { useParams } from "react-router-dom";
-import { loadPostById } from "../services/post-service";
-import { toast } from "react-toastify";
 import {
   Card,
   CardBody,
@@ -14,8 +12,6 @@ import {
   Container,
 } from "reactstrap";
 import { BASE_URL } from "../services/helper";
-import { isLoggedIn } from "../auth/authentication";
-import Comment from "./Comment";
 import {
   EmailIcon,
   EmailShareButton,
@@ -33,37 +29,51 @@ import {
   WhatsappShareButton,
 } from "react-share";
 import usePostById from "../hooks/usePostById";
-import { ShimmerPostDetails, ShimmerPostItem } from "react-shimmer-effects";
+import { ShimmerPostDetails } from "react-shimmer-effects";
+import DOMPurify from "dompurify";
+import { Helmet } from "react-helmet-async";
 
 const PostPage = () => {
-  const { postId } = useParams();
+  //post comes in form of postTitle-postId so we have to split this by "-" for getting postId
+  const { postDetail } = useParams();
+  const [postId, setPostId] = useState();
+  useEffect(() => {
+    const temp = postDetail?.split("-");
+    setPostId(temp[temp?.length - 1]);
+  }, [postDetail]);
 
-  // const [post, setPost] = useState(null);
-  // useEffect(() => {
-  //   loadPostById(postId)
-  //     .then((data) => {
-  //       setPost(data);
-  //       window.scroll(0, 0);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       toast.error("Error in loading post");
-  //     });
-  // }, [postId]);
-  const {
-    data: post,
-    isLoading,
-    fetchNextPage,
-    hasNextPage,
-  } = usePostById(postId);
+  const { data: post, isLoading } = usePostById(postId);
 
   const printDate = (number) => {
     return new Date(number).toLocaleDateString();
   };
-
+  const sanitizedContent = DOMPurify.sanitize(post?.content);
   return (
     <Base>
       <Container>
+        <Helmet>
+          <title>Updeesh {post?.title ? `: ${post.title}` : ""}</title>
+          <meta
+            name="description"
+            content={`Updeesh ${post?.title ? `: ${post.title}` : ""}`}
+          />
+          <meta
+            name="keywords"
+            content=" Hindi Bhajan, Aarti, Katha, Mantra, Preyer, Chalisa, Prerak Kahaniyan"
+          />
+          <link rel="canonical" href={window.location.href} />
+          {/* Facebook tags */}
+          <meta property="og:type" content="Article" />
+          <meta
+            property="og:title"
+            content={`Updeesh ${post?.title ? `: ${post.title}` : ""}`}
+          />
+          <meta
+            property="og:description"
+            content={`Updeesh ${post?.title ? `: ${post.title}` : ""}`}
+          />
+          {/* End Facebook tags */}
+        </Helmet>
         <Row>
           <Col
             md={{
@@ -100,7 +110,7 @@ const PostPage = () => {
 
                 <CardBody>
                   <CardText
-                    dangerouslySetInnerHTML={{ __html: post.content }}
+                    dangerouslySetInnerHTML={{ __html: sanitizedContent }}
                   ></CardText>
                   <hr />
                   <CardText>
@@ -119,7 +129,7 @@ const PostPage = () => {
                   >
                     <FacebookShareButton
                       url={window.location.href}
-                      hashtag={"#Updesh..."}
+                      hashtag={"#Updeesh..."}
                     >
                       <FacebookIcon
                         size={25}
@@ -130,7 +140,7 @@ const PostPage = () => {
 
                     <TelegramShareButton
                       url={window.location.href}
-                      hashtag={"#Updesh..."}
+                      hashtag={"#Updeesh..."}
                     >
                       <TelegramIcon
                         size={25}
@@ -140,7 +150,7 @@ const PostPage = () => {
                     </TelegramShareButton>
                     <WhatsappShareButton
                       url={window.location.href}
-                      hashtag={"#Updesh..."}
+                      hashtag={"#Updeesh..."}
                     >
                       <WhatsappIcon
                         size={25}
@@ -150,7 +160,7 @@ const PostPage = () => {
                     </WhatsappShareButton>
                     <LinkedinShareButton
                       url={window.location.href}
-                      hashtag={"#Updesh..."}
+                      hashtag={"#Updeesh..."}
                     >
                       <LinkedinIcon
                         size={25}
@@ -160,7 +170,7 @@ const PostPage = () => {
                     </LinkedinShareButton>
                     <PinterestShareButton
                       url={window.location.href}
-                      hashtag={"#Updesh..."}
+                      hashtag={"#Updeesh..."}
                     >
                       <PinterestIcon
                         size={25}
@@ -170,7 +180,7 @@ const PostPage = () => {
                     </PinterestShareButton>
                     <TwitterShareButton
                       url={window.location.href}
-                      hashtag={"#Updesh..."}
+                      hashtag={"#Updeesh..."}
                     >
                       <TwitterIcon
                         size={25}
@@ -180,7 +190,7 @@ const PostPage = () => {
                     </TwitterShareButton>
                     <EmailShareButton
                       url={window.location.href}
-                      hashtag={"#Updesh..."}
+                      hashtag={"#Updeesh..."}
                     >
                       <EmailIcon
                         size={25}

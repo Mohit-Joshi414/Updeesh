@@ -15,7 +15,7 @@ const UserDashboard = () => {
                 className="me-2 mb-2"
                 color="dark"
                 tag={Link}
-                to={"/addPost"}
+                to={"/user-admin/addPost"}
               >
                 Add Post
               </Button>
@@ -23,7 +23,7 @@ const UserDashboard = () => {
                 className="me-2 mb-2"
                 color="dark"
                 tag={Link}
-                to={"/displayUserPosts"}
+                to={"/user-admin/displayUserPosts"}
               >
                 Display Posts
               </Button>
@@ -31,7 +31,7 @@ const UserDashboard = () => {
                 className="me-2 mb-2"
                 color="dark"
                 tag={Link}
-                to="/addCategory"
+                to="/user-admin/addCategory"
               >
                 Add Category
               </Button>
@@ -39,7 +39,7 @@ const UserDashboard = () => {
                 className="me-2 mb-2"
                 color="dark"
                 tag={Link}
-                to="/displayCategory"
+                to="/user-admin/displayCategory"
               >
                 Display Category
               </Button>

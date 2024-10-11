@@ -19,7 +19,6 @@ const Comment = ({ post, setPost }) => {
     }
     createComment(comment, post.id, post.user.id)
       .then((data) => {
-        console.log(data);
         toast.success("Comment added...");
         setPost({
           ...post,
@@ -30,7 +29,7 @@ const Comment = ({ post, setPost }) => {
         });
       })
       .catch((err) => {
-        console.error(err);
+        toast.error("Something wrong");
       });
   };
   return (

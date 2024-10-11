@@ -9,7 +9,6 @@ export default function CategoryProvider({ children }) {
   useEffect(() => {
     getPostsTitleByCategory()
       .then((data) => {
-        console.log(data);
         setPostContent(data);
       })
       .catch((err) => {

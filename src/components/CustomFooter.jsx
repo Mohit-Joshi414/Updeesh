@@ -1,18 +1,9 @@
 import { Col, Row } from "reactstrap";
 import styles from "../css/CustomFooter.module.css";
 import { Link } from "react-router-dom";
+import React from "react";
 
-const CustomFooter = () => {
-  // var style = {
-  //   backgroundColor: "#333741",
-  //   borderTop: "1px solid #E7E7E7",
-  //   textAlign: "center",
-  //   position: "absolute",
-  //   left: "0",
-  //   bottom: "0",
-  //   height: "60px",
-  //   width: "100vw",
-  // };
+const CustomFooter = React.memo(() => {
   return (
     <div className={styles.footer}>
       <footer>
@@ -34,7 +25,7 @@ const CustomFooter = () => {
             </Link>
             <p className="mb-2" style={{ color: "#fff" }}>
               ❤️Designed and built with all the love in the world by the{" "}
-              <Link to="/about">Updesh team</Link>.❤️
+              <Link to="/about">Updeesh team</Link>.❤️
             </p>
           </Col>
         </Row>
@@ -54,6 +45,6 @@ const CustomFooter = () => {
       </footer>
     </div>
   );
-};
+});
 
 export default CustomFooter;

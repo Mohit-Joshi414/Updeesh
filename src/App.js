@@ -12,7 +12,6 @@ import PrivateRouters from "./services/PrivateRouters";
 import ProfileInfo from "./components/user-routes/ProfileInfo";
 import PostPage from "./components/PostPage";
 import UserProvider from "./context/UserProvider";
-import CategoryWise from "./components/CategoryWise";
 import UpdatePost from "./components/UpdatePost";
 import UpdateCategory from "./components/UpdateCategory";
 import AddPost from "./components/AddPost";
@@ -37,14 +36,9 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactUs />} />
-              <Route path="/post/:postId" element={<PostPage />} />
-              <Route path="/category/:categoryId" element={<CategoryWise />} />
-              <Route path="/addPost" element={<AddPost />} />
-              <Route path="/displayUserPosts" element={<DisplayUserPosts />} />
-              <Route path="/addCategory" element={<AddCategory />} />
-              <Route path="/displayCategory" element={<DisplayCategory />} />
+              <Route path="/post/:postDetail" element={<PostPage />} />
               <Route
-                path="/categoryWise/:categoryId"
+                path="/category/:categoryDetail"
                 element={<CategoryWiseView />}
               />
               <Route path="/admin">
@@ -59,6 +53,10 @@ function App() {
                   path="displayContactUs"
                   element={<DisplayContactUsList />}
                 />
+                <Route path="addPost" element={<AddPost />} />
+                <Route path="displayUserPosts" element={<DisplayUserPosts />} />
+                <Route path="addCategory" element={<AddCategory />} />
+                <Route path="displayCategory" element={<DisplayCategory />} />
                 <Route
                   path="updateCategory/:categoryId"
                   element={<UpdateCategory />}
@@ -68,7 +66,7 @@ function App() {
           </BrowserRouter>
         </UserProvider>
       </CategoryListProvider>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools />
     </CategoryProvider>
   );
 }

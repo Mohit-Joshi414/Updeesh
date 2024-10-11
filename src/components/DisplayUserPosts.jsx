@@ -14,20 +14,18 @@ const DisplayUserPosts = () => {
   const [post, setPost] = useState();
   useEffect(() => {
     setUser(getCurrentUser());
-
-    // loadPosts();
   }, []);
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetching } =
-    usePostsByUser(user.id, 3);
+    usePostsByUser(user.id, 10);
 
   function loadPosts() {
-    getPostsByUserId(user.id)
+    getPostsByUserId(user.id, 0, 10)
       .then((data) => {
         setPost(data);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Something wrong");
       });
   }
   const deletePost = (postId) => {
@@ -37,7 +35,6 @@ const DisplayUserPosts = () => {
         loadPosts();
       })
       .catch((err) => {
-        console.error(err);
         toast.error("Error...");
       });
   };
@@ -117,16 +114,6 @@ const DisplayUserPosts = () => {
             })}
           </InfiniteScroll>
         </Row>
-        {/* <h2 className="mt-4">Published Posts</h2>
-        <Row xs={1} sm={1} md={2} lg={2} xl={2}>
-          {post?.content?.map((item) => {
-            return (
-              <Col key={item.id}>
-                <Post post={item} parent="dashboard" deletePost={deletePost} />
-              </Col>
-            );
-          })}
-        </Row> */}
       </div>
     </BaseWithoutCategoryList>
   );

@@ -3,6 +3,7 @@ import { Card, CardBody, Table } from "reactstrap";
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
 import { loadAllContactUs } from "../services/contactus-service";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { toast } from "react-toastify";
 
 const DisplayContactUsList = () => {
   const [contactUs, setContactUs] = useState({
@@ -34,12 +35,11 @@ const DisplayContactUsList = () => {
         });
       })
       .catch((err) => {
-        console.error(err);
+        toast.error("Something wrong");
       });
   };
 
   const changePageInfinite = () => {
-    console.log("page changed");
     setCurrentPage(currentPage + 1);
   };
   return (
@@ -71,7 +71,6 @@ const DisplayContactUsList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log(contactUs.contactUs)}
                   {contactUs?.contactUs?.map((c, i) => (
                     <tr key={i}>
                       <th scope="row">{i + 1}</th>

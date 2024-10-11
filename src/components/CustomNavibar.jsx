@@ -19,7 +19,7 @@ import { toast } from "react-toastify";
 import CategoryWiseView from "./CategoryWiseView";
 import { categoryListContext } from "../context/categoryContext";
 
-const CustomNavibar = () => {
+const CustomNavibar = React.memo(() => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [login, setLogin] = useState(false);
@@ -86,7 +86,9 @@ const CustomNavibar = () => {
                         {categories?.map((category, index) => (
                           <DropdownItem
                             tag={Link}
-                            to={`/categoryWise/${category.id}`}
+                            to={`/category/${
+                              category?.title + "-" + category?.id
+                            }`}
                             onChange={(e) => {
                               return <CategoryWiseView />;
                             }}
@@ -145,6 +147,6 @@ const CustomNavibar = () => {
       </Navbar>
     </div>
   );
-};
+});
 
 export default CustomNavibar;

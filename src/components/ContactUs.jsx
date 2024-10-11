@@ -12,6 +12,8 @@ import {
 } from "reactstrap";
 import { toast } from "react-toastify";
 import { createContactUs } from "../services/contactus-service";
+import { Helmet } from "react-helmet-async";
+import { HashLoader } from "react-spinners";
 
 const ContactUs = () => {
   const [data, setData] = useState({
@@ -26,8 +28,9 @@ const ContactUs = () => {
     isError: false,
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (event, property) => {
-    // console.log(event.target.value);
     setData({ ...data, [property]: event.target.value });
   };
 
@@ -42,27 +45,33 @@ const ContactUs = () => {
 
   const submitForm = (event) => {
     event.preventDefault();
-
+    setLoading(true);
     createContactUs(data)
       .then((res) => {
-        console.log(res);
-        console.log("Success");
         toast.success("Thanks for contacting us...");
         resetData();
       })
       .catch((err) => {
-        console.log(err);
-        console.error("error");
         setError({
           errors: err,
           isError: true,
         });
-        // toast.error("Something wrong please try again!!");
+        toast.error("Something wrong please try again!!");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   return (
     <div>
       <BaseWithoutCategoryList>
+        <Helmet>
+          <title>Updeesh : Contact us</title>
+          <meta
+            name="description"
+            content="Please fill out this form to reach out to us"
+          />
+        </Helmet>
         <Card className="m-5">
           <div className="container mt-3 mb-3">
             <h2 className="mb-4">Contact US</h2>
@@ -143,6 +152,15 @@ const ContactUs = () => {
                 >
                   Reset
                 </Button>
+              </Container>
+              <Container className="d-flex justify-content-center align-items-center mt-5 mb-5">
+                <HashLoader
+                  color="black"
+                  loading={loading}
+                  size={100}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
               </Container>
             </Form>
           </div>

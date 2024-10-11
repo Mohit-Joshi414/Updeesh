@@ -4,24 +4,24 @@ import { getUserById } from "../../services/user-service";
 import { Card, CardBody, Col, Container, Row, Table } from "reactstrap";
 import { getCurrentUser } from "../../auth/authentication";
 import BaseWithoutCategoryList from "../BaseWithoutCategoryList";
+import { toast } from "react-toastify";
 
 const ProfileInfo = () => {
   // const users = useContext(userContext);
   const { userId } = useParams();
-  console.log(userId);
+
   const [user, setUser] = useState(null);
   const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
   useEffect(() => {
     setCurrentUser(getCurrentUser());
-    console.log(currentUser.id);
+
     getUserById(userId)
       .then((data) => {
-        console.log(data);
         setUser({ ...data });
       })
       .catch((err) => {
-        console.error(err);
+        toast.error("Something wrong");
       });
   }, []);
 

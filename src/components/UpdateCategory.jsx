@@ -30,7 +30,7 @@ const UpdateCategory = () => {
         });
       })
       .catch((err) => {
-        console.error(err);
+        toast.error("Something wrong");
       });
   }, []);
   const fieldChange = (event) => {
@@ -45,7 +45,6 @@ const UpdateCategory = () => {
         toast.success("Category updated successfully");
       })
       .catch((err) => {
-        console.error(err);
         toast.error("Something went wrong");
       });
   };

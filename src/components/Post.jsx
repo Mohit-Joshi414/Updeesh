@@ -20,7 +20,6 @@ const Post = ({
 }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-
   useEffect(() => {
     setLoggedIn(isLoggedIn());
     setUser(getCurrentUser());
@@ -48,19 +47,24 @@ const Post = ({
         </Col>
         <Col lg="6" sm="12">
           <CardBody>
-            <CardTitle tag="h5">{post.title}</CardTitle>
-            <CardText
+            <CardTitle tag="h5" style={{ fontWeight: "bold" }}>
+              {post.title}
+            </CardTitle>
+            {/* <CardText
               dangerouslySetInnerHTML={{
                 __html: post?.content.substring(0, 100) + "...",
               }}
-            ></CardText>
+            ></CardText> */}
             <CardText>
               <small className="text-muted">
                 Created at: {new Date(post.post_timestamp).toLocaleDateString()}
               </small>
             </CardText>
             <div className="container text-center">
-              <Link className="btn btn-dark mt-2" to={"/post/" + post.id}>
+              <Link
+                className="btn btn-dark mt-2"
+                to={"/post/" + post.title.split(" ").join("-") + "-" + post.id}
+              >
                 Read more
               </Link>
 

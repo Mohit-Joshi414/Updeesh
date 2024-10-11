@@ -33,7 +33,6 @@ const AddCategory = () => {
         navigate("/user-admin/dashboard");
       })
       .catch((err) => {
-        console.error(err);
         toast.error("Something went wrong");
       });
   };

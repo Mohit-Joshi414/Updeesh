@@ -11,7 +11,7 @@ const SideListCard = ({ post }) => {
         <CardBody>
           <h4>
             <Link
-              to={`/categoryWise/${post?.categoryId}`}
+              to={`/category/${post?.categoryName + "-" + post?.categoryId}`}
               className={styles.anchor}
             >
               {post?.categoryName}
@@ -20,20 +20,24 @@ const SideListCard = ({ post }) => {
           <hr />
           {post?.posts?.map((p) => (
             <p key={p.id}>
-              <Link to={"/post/" + p.id} className={styles.anchor}>
+              <Link
+                to={"/post/" + p.title.split(" ").join("-") + "-" + p.id}
+                className={styles.anchor}
+              >
                 {p.title}
               </Link>
             </p>
           ))}
-
-          <p>
-            <Link
-              to={`/categoryWise/${post?.categoryId}`}
-              className={styles.anchor}
-            >
-              View More...
-            </Link>
-          </p>
+          {post.posts.length === 5 && (
+            <p>
+              <Link
+                to={`/category/${post?.categoryName + "-" + post?.categoryId}`}
+                className={styles.anchor}
+              >
+                View More...
+              </Link>
+            </p>
+          )}
         </CardBody>
       </Card>
     </div>

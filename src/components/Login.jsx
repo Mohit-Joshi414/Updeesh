@@ -19,34 +19,25 @@ const Login = () => {
     password: "",
   });
 
-  useEffect(() => {
-    console.log("login called");
-  }, []);
+  useEffect(() => {}, []);
   const navigate = useNavigate();
 
   const handleChange = (event, property) => {
-    // console.log(event.target.value);
     setLoginData({ ...loginData, [property]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(loginData);
 
     login(loginData)
       .then((res) => {
-        console.log(res);
-
         //store login detail in local storage
         doLogin(res, () => {
-          console.log("login details saved in localstorage.");
-          //redirect after login
           navigate("/user-admin/dashboard");
         });
         toast.success("Login successful!");
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Something went wrong please try later!!");
       });
   };

@@ -1,14 +1,19 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import BaseWithoutCategoryList from "./BaseWithoutCategoryList";
 import { Card } from "reactstrap";
+import { Helmet } from "react-helmet-async";
 const About = () => {
   return (
     <BaseWithoutCategoryList>
+      <Helmet>
+        <title>Updeesh : About</title>
+        <meta name="description" content="All about our Updeesh page" />
+      </Helmet>
       <div className="my-3">
         <Card className="p-3">
           <h2>About Us</h2>
           <p>
-            Welcome to Updesh, a sanctuary for those seeking to immerse
+            Welcome to Updeesh, a sanctuary for those seeking to immerse
             themselves in the rich spiritual and cultural traditions of
             Hinduism. Our platform is a humble offering to explore the depths of
             divine stories, sacred chants, rituals, and the timeless wisdom
@@ -47,7 +52,7 @@ const About = () => {
             Temples are not merely physical structures but living embodiments of
             devotion and spiritual energy. They are places where the divine
             presence is invoked, and the devotee can experience a deep
-            connection with God. On Updesh, we provide information about famous
+            connection with God. On Updeesh, we provide information about famous
             temples across India and the world, their histories, significance,
             and the deities they enshrine. Whether you wish to plan a pilgrimage
             or simply learn about the architectural marvels that represent the
@@ -127,7 +132,7 @@ const About = () => {
           <h4> Our Commitment</h4>
           <p>
             {" "}
-            At Updesh, we are committed to preserving and promoting the rich
+            At Updeesh, we are committed to preserving and promoting the rich
             spiritual heritage of Hinduism in its purest form. Our content is
             carefully curated and verified by experts in the field, ensuring
             that you receive accurate and authentic information. We strive to
@@ -142,7 +147,7 @@ const About = () => {
             to support and guide you every step of the way. Whether you are
             seeking to reconnect with your faith, looking for spiritual wisdom,
             or simply want to learn more about Hindu culture and practices,
-            Updesh is here to offer you a wealth of knowledge and resources.
+            Updeesh is here to offer you a wealth of knowledge and resources.
           </p>
           <p>
             We invite you to explore our site, participate in our online
@@ -150,7 +155,7 @@ const About = () => {
             songs, and teachings that have inspired millions over centuries.
             Together, let us walk the path of devotion, wisdom, and inner peace,
             guided by the light of Sanatan Dharma. Thank you for visiting
-            Updesh. We look forward to being a part of your spiritual journey.
+            Updeesh. We look forward to being a part of your spiritual journey.
           </p>
         </Card>
       </div>

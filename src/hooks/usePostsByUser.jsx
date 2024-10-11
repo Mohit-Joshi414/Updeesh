@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPostsByUserId } from "../services/post-service";
 
 const usePostsByUser = (userId, pageSize) => {
@@ -6,11 +6,6 @@ const usePostsByUser = (userId, pageSize) => {
     const response = await getPostsByUserId(userId, pageParam, limit);
     return response;
   };
-  // const { data, isError, isLoading, error } = useQuery({
-  //   queryKey: ["postContent", pageNumber],
-  //   queryFn: fetchPosts,
-  // });
-
   const {
     data,
     error,
@@ -26,14 +21,15 @@ const usePostsByUser = (userId, pageSize) => {
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
       // Check if it's not the last page
-      if (!lastPage.lastPage) {
-        return lastPage.pageNumber + 1; // Return the next page number
+      if (!lastPage?.lastPage) {
+        return lastPage?.pageNumber + 1; // Return the next page number
       } else {
         return undefined; // No more pages to fetch
       }
     },
     staleTime: 1800000,
     gcTime: 1800000,
+    enabled: !!userId,
   });
 
   return {
